@@ -7,10 +7,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBrown"
+        android:background="@color/colorBlue"
         android:alpha="0.8"
         android:layout_marginTop="100dp"
         >
+
+
 
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
