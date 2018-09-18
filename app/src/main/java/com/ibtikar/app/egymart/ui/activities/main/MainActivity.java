@@ -12,10 +12,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ibtikar.app.egymart.R;
-import com.ibtikar.app.egymart.ui.fragments.CategoriesFragment;
+import com.ibtikar.app.egymart.ui.fragments.categoriesfragment.CategoriesFragment;
 import com.ibtikar.app.egymart.ui.fragments.MenueDialogFragment;
 
 import butterknife.BindView;
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         mHandler = new Handler(Looper.getMainLooper());
         ButterKnife.bind(this);
         setupActionBar();
-        getSupportFragmentManager().beginTransaction().add(R.id.main_fragment_container, new CategoriesFragment(), "").commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.main_fragment_container, new CategoriesFragment(), "men").commit();
     }
 
 
@@ -98,4 +97,5 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
 }
