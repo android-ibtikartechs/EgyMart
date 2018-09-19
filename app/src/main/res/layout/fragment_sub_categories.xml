@@ -3,26 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.ProductsFragment"
-    android:background="#eeeeee"
     android:orientation="vertical"
-    >
+    tools:context=".ui.fragments.subcategories.SubCategoriesFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/colorBlue"
+        android:text="Category Name"
         android:textColor="@color/colorWhite"
-        android:text="Sub Category Name"
-        android:gravity="center"
         android:textSize="18sp"
+        android:gravity="center"
         />
 
-
     <com.ibtikar.app.egymart.uiutilities.CustomRecyclerView
-        android:id="@+id/products_list"
+        android:id="@+id/sub_cat_home_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

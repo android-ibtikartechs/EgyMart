@@ -9,4 +9,7 @@
     <color name="colorOrange">#FB6A00</color>
     <color name="colorBlack">#000000</color>
     <color name="colorSemiBlack">#615F5F</color>
+    <color name="placeholder_grey">#AAADC4</color>
+    <color name="placeholder_grey_20">#33AAADC4</color>
+    <color name="white_blue">#117ecb</color>
 </resources>
