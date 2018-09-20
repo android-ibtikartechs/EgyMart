@@ -160,7 +160,7 @@ public class AdapterSubCategories extends CustomRecyclerView.Adapter<RecyclerVie
         switch (viewType) {
             case ITEM:
                 View viewItem = mInflater.inflate(
-                        R.layout.view_category_item, viewGroup, false);
+                        R.layout.view_product_item_grid, viewGroup, false);
                 viewHolder = new SubCategoryViewHolder(viewItem);
                 break;
             case LOADING:
@@ -173,11 +173,11 @@ public class AdapterSubCategories extends CustomRecyclerView.Adapter<RecyclerVie
 
 
     public class SubCategoryViewHolder extends RecyclerView.ViewHolder{
-        @BindView(R.id.img_desc)
+        @BindView(R.id.cat_home_big_img)
         ImageView img_desc;
-        @BindView(R.id.tv_title)
+        @BindView(R.id.cat_home_big_txt)
         TextView tv_title;
-        @BindView(R.id.lout_container)
+        @BindView(R.id.cat_home_big_container)
         RelativeLayout lout_container;
 
         public SubCategoryViewHolder(View itemView) {

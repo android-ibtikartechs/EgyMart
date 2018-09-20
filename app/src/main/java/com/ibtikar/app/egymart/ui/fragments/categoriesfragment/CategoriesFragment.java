@@ -22,6 +22,7 @@ import com.ibtikar.app.egymart.data.adapters.AdapterCategories;
 import com.ibtikar.app.egymart.data.models.CategoryModel;
 import com.ibtikar.app.egymart.ui.activities.base.BaseFragment;
 import com.ibtikar.app.egymart.ui.fragments.ProductDetailsFragment;
+import com.ibtikar.app.egymart.ui.fragments.subcategories.SubCategoriesFragment;
 import com.ibtikar.app.egymart.uiutilities.CustomRecyclerView;
 
 import java.util.ArrayList;
@@ -140,7 +141,7 @@ public class CategoriesFragment extends BaseFragment implements CategoriesMvpVie
 
     @Override
     public void onItemNewsClickListner(String title, String id) {
-
+        getFragmentManager().beginTransaction().replace(R.id.main_fragment_container, new SubCategoriesFragment(), "").addToBackStack("").commit();
     }
 
     @Override
