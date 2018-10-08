@@ -102,21 +102,6 @@ public class CategoriesFragment extends BaseFragment implements CategoriesMvpVie
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
         arrayList = new ArrayList<>();
         ButterKnife.bind(this,view);
-
-        staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-        catRecyclerView.setLayoutManager(staggeredGridLayoutManager);
-        catRecyclerView.setHasFixedSize(true);
-
-        populatRecyclerView();
-        presenter.loadCategories();
-
-        loutClick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.main_fragment_container, new ProductDetailsFragment(), "").addToBackStack("").commit();
-            }
-        });
-
         return view;
     }
 
@@ -128,8 +113,13 @@ public class CategoriesFragment extends BaseFragment implements CategoriesMvpVie
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+        catRecyclerView.setLayoutManager(staggeredGridLayoutManager);
+        catRecyclerView.setHasFixedSize(true);
 
+        populatRecyclerView();
+        presenter.loadCategories();
+        super.onViewCreated(view, savedInstanceState);
     }
 
     private void populatRecyclerView() {

@@ -2,6 +2,7 @@ package com.ibtikar.app.egymart.data.adapters;
 
 import android.content.Context;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -12,11 +13,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ibtikar.app.egymart.R;
-import com.ibtikar.app.egymart.data.models.CategoryModel;
+import com.ibtikar.app.egymart.data.models.OfferModel;
 import com.ibtikar.app.egymart.uiutilities.CustomRecyclerView;
 import com.ibtikar.app.egymart.uiutilities.PaginationAdapterCallback;
 
@@ -25,10 +25,10 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AdapterSubCategories extends CustomRecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class AdapterOffers  extends CustomRecyclerView.Adapter<RecyclerView.ViewHolder>{
     private static final int ITEM = 0;
     private static final int LOADING = 1;
-    private ArrayList<CategoryModel> arrayList;
+    private ArrayList<OfferModel> arrayList;
     private Context context;
     private int dataType;
     private customButtonListener customListener;
@@ -41,8 +41,9 @@ public class AdapterSubCategories extends CustomRecyclerView.Adapter<RecyclerVie
     private PaginationAdapterCallback mCallback;
     private String errorMsg;
 
-    public AdapterSubCategories(Context context,
-                                    ArrayList<CategoryModel> arrayList, int dataType) {
+
+    public AdapterOffers(Context context,
+                                ArrayList<OfferModel> arrayList, int dataType) {
         this.context = context;
         this.arrayList = arrayList;
         this.dataType = dataType;
@@ -60,18 +61,18 @@ public class AdapterSubCategories extends CustomRecyclerView.Adapter<RecyclerVie
         return (position == arrayList.size() -1 && isLoadingAdded) ? LOADING : ITEM;
     }
 
-    public void add(CategoryModel r) {
+    public void add(OfferModel r) {
         arrayList.add(r);
         notifyItemInserted(arrayList.size()-1 );
     }
 
-    public void addAll(ArrayList<CategoryModel> opResults) {
-        for (CategoryModel result : opResults) {
+    public void addAll(ArrayList<OfferModel> opResults) {
+        for (OfferModel result : opResults) {
             add(result);
         }
     }
 
-    public void remove(CategoryModel r) {
+    public void remove(OfferModel r) {
         int position = arrayList.indexOf(r);
         if (position > -1) {
             arrayList.remove(position);
@@ -85,7 +86,7 @@ public class AdapterSubCategories extends CustomRecyclerView.Adapter<RecyclerVie
             remove(getItem(0));
         }
     }
-    public CategoryModel getItem(int position) {
+    public OfferModel getItem(int position) {
         return arrayList.get(position);
     }
 
@@ -104,7 +105,7 @@ public class AdapterSubCategories extends CustomRecyclerView.Adapter<RecyclerVie
         isLoadingAdded = false;
 
         int position = arrayList.size() - 1;
-        CategoryModel result = getItem(position);
+        OfferModel result = getItem(position);
 
         if (result != null) {
             arrayList.remove(position);
@@ -113,80 +114,75 @@ public class AdapterSubCategories extends CustomRecyclerView.Adapter<RecyclerVie
     }
 
 
+    @NonNull
     @Override
-    public void onBindViewHolder(CustomRecyclerView.ViewHolder holder, final int position) {
-        final CategoryModel model = arrayList.get(position);
-        switch (getItemViewType(position)) {
-            case ITEM:
-                final SubCategoryViewHolder subCategoryViewHolder = (SubCategoryViewHolder) holder;
-                subCategoryViewHolder.img_desc.setImageBitmap(model.getIm());
-                subCategoryViewHolder.tv_title.setText(model.getTitle());
-                subCategoryViewHolder.lout_container.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        customListener.onItemClickListner(model.getId(), model.getTitle());
-                    }
-                });
-                break;
-
-                case LOADING:
-                LoadingVH loadingVH = (LoadingVH) holder;
-                    StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) loadingVH.itemView.getLayoutParams();
-                    layoutParams.setFullSpan(true);
-
-
-                    if (retryPageLoad) {
-                        loadingVH.mErrorLayout.setVisibility(View.VISIBLE);
-                        loadingVH.mProgressBar.setVisibility(View.GONE);
-
-                        loadingVH.mErrorTxt.setText(
-                                errorMsg != null ?
-                                        errorMsg :
-                                        context.getString(R.string.error_msg_unknown));
-
-                    } else {
-                        loadingVH.mErrorLayout.setVisibility(View.GONE);
-                        loadingVH.mProgressBar.setVisibility(View.VISIBLE);
-                    }
-                    break;
-
-
-        }
-    }
-
-
-    @Override
-    public CustomRecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder viewHolder = null;
-        LayoutInflater mInflater = LayoutInflater.from(viewGroup.getContext());
+        LayoutInflater mInflater = LayoutInflater.from(parent.getContext());
         switch (viewType) {
             case ITEM:
                 View viewItem = mInflater.inflate(
-                        R.layout.view_product_item_grid, viewGroup, false);
-                viewHolder = new SubCategoryViewHolder(viewItem);
+                        R.layout.view_offer_item, parent, false);
+                viewHolder = new OfferViewHolder(viewItem);
                 break;
             case LOADING:
-                View viewLoading = mInflater.inflate(R.layout.view_loading_footer, viewGroup, false);
+                View viewLoading = mInflater.inflate(R.layout.view_loading_footer, parent, false);
                 viewHolder = new LoadingVH(viewLoading);
                 break;
         }
         return viewHolder;
     }
 
+    @Override
+    public void onBindViewHolder(@NonNull CustomRecyclerView.ViewHolder holder, int position) {
+        final OfferModel model = arrayList.get(position);
+        switch (getItemViewType(position)) {
+            case ITEM:
+                final OfferViewHolder offerViewHolder = (OfferViewHolder) holder;
+                offerViewHolder.im.setImageBitmap(model.getImgUrl());
+                offerViewHolder.im.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        customListener.onItemClickListner(model.getId());
+                    }
+                });
+                break;
 
-    public class SubCategoryViewHolder extends RecyclerView.ViewHolder{
-        @BindView(R.id.cat_home_big_img)
-        ImageView img_desc;
-        @BindView(R.id.cat_home_big_txt)
-        TextView tv_title;
-        @BindView(R.id.cat_home_big_container)
-        RelativeLayout lout_container;
+            case LOADING:
+                LoadingVH loadingVH = (LoadingVH) holder;
+                StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) loadingVH.itemView.getLayoutParams();
+                layoutParams.setFullSpan(true);
 
-        public SubCategoryViewHolder(View itemView) {
+
+                if (retryPageLoad) {
+                    loadingVH.mErrorLayout.setVisibility(View.VISIBLE);
+                    loadingVH.mProgressBar.setVisibility(View.GONE);
+
+                    loadingVH.mErrorTxt.setText(
+                            errorMsg != null ?
+                                    errorMsg :
+                                    context.getString(R.string.error_msg_unknown));
+
+                } else {
+                    loadingVH.mErrorLayout.setVisibility(View.GONE);
+                    loadingVH.mProgressBar.setVisibility(View.VISIBLE);
+                }
+                break;
+
+
+        }
+    }
+
+    public class OfferViewHolder extends RecyclerView.ViewHolder{
+        @BindView(R.id.im)
+        ImageView im;
+
+        public OfferViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
+
 
     protected class LoadingVH extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.loadmore_progress)
@@ -225,7 +221,7 @@ public class AdapterSubCategories extends CustomRecyclerView.Adapter<RecyclerVie
     }
 
     public interface customButtonListener {
-        public void onItemClickListner(String id, String title);
+        public void onItemClickListner(String id);
     }
     public void setCustomButtonListner(customButtonListener listener) {
         this.customListener = listener;
@@ -243,5 +239,6 @@ public class AdapterSubCategories extends CustomRecyclerView.Adapter<RecyclerVie
 
         if (errorMsg != null) this.errorMsg = errorMsg;
     }
+
 
 }

@@ -1,4 +1,4 @@
-package com.ibtikar.app.egymart.ui.fragments.subcategories;
+package com.ibtikar.app.egymart.ui.fragments.products_list;
 
 
 import android.content.Context;
@@ -22,7 +22,7 @@ import com.ibtikar.app.egymart.data.DataManager;
 import com.ibtikar.app.egymart.data.adapters.AdapterSubCategories;
 import com.ibtikar.app.egymart.data.models.CategoryModel;
 import com.ibtikar.app.egymart.ui.activities.base.BaseFragment;
-import com.ibtikar.app.egymart.ui.fragments.products_list.ProductsFragment;
+import com.ibtikar.app.egymart.ui.fragments.ProductDetailsFragment;
 import com.ibtikar.app.egymart.uiutilities.CustomRecyclerView;
 import com.ibtikar.app.egymart.uiutilities.PaginationAdapterCallback;
 import com.ibtikar.app.egymart.uiutilities.paginationStaggardScrollListener;
@@ -34,22 +34,21 @@ import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SubCategoriesFragment#newInstance} factory method to
+ * Use the {@link ProductsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SubCategoriesFragment extends BaseFragment implements SubCategoriesMvpView, AdapterSubCategories.customButtonListener, PaginationAdapterCallback {
+public class ProductsFragment extends BaseFragment implements ProductsMvpView, AdapterSubCategories.customButtonListener, PaginationAdapterCallback {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String categoryId;
+    private String subCategoryId;
     private String mParam2;
 
-
-    @BindView(R.id.sub_cat_home_list)
-    CustomRecyclerView rvListSubCategories;
+    @BindView(R.id.products_list)
+    CustomRecyclerView rvListProducts;
 
     @BindView(R.id.im_list_icon)
     ImageView btnList;
@@ -57,6 +56,7 @@ public class SubCategoriesFragment extends BaseFragment implements SubCategories
     ImageView btnGridIcon;
 
     AdapterSubCategories adapter;
+
     StaggeredGridLayoutManager staggeredGridLayoutManager;
     LinearLayoutManager linearLayoutManager;
     private static final int PAGE_START = 1;
@@ -69,12 +69,11 @@ public class SubCategoriesFragment extends BaseFragment implements SubCategories
 
     private ArrayList<CategoryModel> arrayList;
 
-
-
     Handler handler;
-    SubCategoriesPresenter presenter;
+    ProductsPresenter presenter;
 
-    public SubCategoriesFragment() {
+
+    public ProductsFragment() {
         // Required empty public constructor
     }
 
@@ -84,11 +83,11 @@ public class SubCategoriesFragment extends BaseFragment implements SubCategories
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment SubCategoriesFragment.
+     * @return A new instance of fragment ProductsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SubCategoriesFragment newInstance(String param1, String param2) {
-        SubCategoriesFragment fragment = new SubCategoriesFragment();
+    public static ProductsFragment newInstance(String param1, String param2) {
+        ProductsFragment fragment = new ProductsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -100,12 +99,13 @@ public class SubCategoriesFragment extends BaseFragment implements SubCategories
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            categoryId = getArguments().getString(ARG_PARAM1);
+            subCategoryId = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
         handler = new Handler(Looper.getMainLooper());
         DataManager dataManager = ((MvpApp) getActivity().getApplication()).getDataManager();
-        presenter = new SubCategoriesPresenter(dataManager);
+        presenter = new ProductsPresenter(dataManager);
         presenter.onAttach(this);
     }
 
@@ -113,12 +113,10 @@ public class SubCategoriesFragment extends BaseFragment implements SubCategories
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_sub_categories, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_products, container, false);
         ButterKnife.bind(this, rootView);
         arrayList = new ArrayList<>();
         return rootView;
-
-
     }
 
     @Override
@@ -128,7 +126,7 @@ public class SubCategoriesFragment extends BaseFragment implements SubCategories
         btnList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rvListSubCategories.setLayoutManager(linearLayoutManager);
+                rvListProducts.setLayoutManager(linearLayoutManager);
                 adapter.notifyDataSetChanged();
                 btnList.setImageResource(R.drawable.icon_list_selected);
                 btnGridIcon.setImageResource(R.drawable.icon_grid_normal);
@@ -139,7 +137,7 @@ public class SubCategoriesFragment extends BaseFragment implements SubCategories
         btnGridIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rvListSubCategories.setLayoutManager(staggeredGridLayoutManager);
+                rvListProducts.setLayoutManager(staggeredGridLayoutManager);
                 adapter.notifyDataSetChanged();
                 btnGridIcon.setImageResource(R.drawable.icon_grid_selected);
                 btnList.setImageResource(R.drawable.icon_list_normal);
@@ -147,33 +145,34 @@ public class SubCategoriesFragment extends BaseFragment implements SubCategories
 
             }
         });
-        rvListSubCategories.setLayoutManager(staggeredGridLayoutManager);
-        rvListSubCategories.setHasFixedSize(true);
+        rvListProducts.setLayoutManager(staggeredGridLayoutManager);
+        rvListProducts.setHasFixedSize(true);
 
-        rvListSubCategories.setItemViewCacheSize(20);
-        rvListSubCategories.setDrawingCacheEnabled(true);
-        rvListSubCategories.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        rvListProducts.setItemViewCacheSize(20);
+        rvListProducts.setDrawingCacheEnabled(true);
+        rvListProducts.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         populatRecyclerView();
         implementScrolListener();
 
         currentPage = PAGE_START;
-        presenter.loadSubCategoriesFirstPage(categoryId);
+        presenter.loadProductsFirstPage(subCategoryId);
         super.onViewCreated(view, savedInstanceState);
     }
+
 
     private void populatRecyclerView() {
 
         adapter = new AdapterSubCategories(getActivity(), arrayList, StaticValues.SUBCATEGORY_DATA_TYPE);
         adapter.setCustomButtonListner(this);
         adapter.setPagingAdapterCallback(this);
-        rvListSubCategories.setAdapter(adapter);
+        rvListProducts.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
     }
 
     private void implementScrolListener()
     {
-        rvListSubCategories.addOnScrollListener(new paginationStaggardScrollListener(staggeredGridLayoutManager) {
+        rvListProducts.addOnScrollListener(new paginationStaggardScrollListener(staggeredGridLayoutManager) {
             @Override
             protected void hideCatList() {
 
@@ -184,7 +183,7 @@ public class SubCategoriesFragment extends BaseFragment implements SubCategories
                 isLoading = true;
                 currentPage += 1;
 
-                presenter.loadSubCategoriesNextPage(categoryId, currentPage);
+                presenter.loadProductsNextPage(subCategoryId, currentPage);
             }
 
             @Override
@@ -203,6 +202,12 @@ public class SubCategoriesFragment extends BaseFragment implements SubCategories
             }
         });
 
+    }
+
+
+    @Override
+    public void onItemClickListner(String id, String title) {
+        getFragmentManager().beginTransaction().replace(R.id.main_fragment_container, new ProductDetailsFragment(), "").addToBackStack("").commit();
     }
 
     @Override
@@ -261,12 +266,7 @@ public class SubCategoriesFragment extends BaseFragment implements SubCategories
     }
 
     @Override
-    public void onItemClickListner(String id, String title) {
-        getFragmentManager().beginTransaction().replace(R.id.main_fragment_container, new ProductsFragment(), "").addToBackStack("").commit();
-    }
-
-    @Override
     public void retryPageLoad() {
-        presenter.loadSubCategoriesNextPage(categoryId, currentPage);
+        presenter.loadProductsNextPage(subCategoryId, currentPage);
     }
 }

@@ -7,15 +7,44 @@
     tools:context=".ui.fragments.subcategories.SubCategoriesFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/colorBlue"
-        android:text="Category Name"
-        android:textColor="@color/colorWhite"
-        android:textSize="18sp"
-        android:gravity="center"
-        />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textColor="@color/colorBlue"
+            android:text="Category Name"
+            android:gravity="center_vertical"
+            android:textSize="18sp"
+
+            />
+
+        <ImageView
+            android:id="@+id/im_grid_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/icon_grid_selected"
+            android:layout_centerVertical="true"
+
+            />
+
+        <ImageView
+            android:id="@+id/im_list_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/im_grid_icon"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_list_normal"
+            android:layout_marginEnd="8dp"
+            />
+
+    </RelativeLayout>
 
     <com.ibtikar.app.egymart.uiutilities.CustomRecyclerView
         android:id="@+id/sub_cat_home_list"
