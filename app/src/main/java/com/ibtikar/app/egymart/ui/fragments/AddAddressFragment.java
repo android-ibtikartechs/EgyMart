@@ -3,7 +3,6 @@ package com.ibtikar.app.egymart.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +15,10 @@ import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link PaymentFragment#newInstance} factory method to
+ * Use the {@link AddAddressFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PaymentFragment extends Fragment {
+public class AddAddressFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,10 +28,12 @@ public class PaymentFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    @BindView(R.id.btn_add_payment)
-    ImageView btnAddPayment;
+    @BindView(R.id.btn_checkout)
+    ImageView btnCheckout;
 
-    public PaymentFragment() {
+
+
+    public AddAddressFragment() {
         // Required empty public constructor
     }
 
@@ -42,11 +43,11 @@ public class PaymentFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment PaymentFragment.
+     * @return A new instance of fragment AddAddressFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static PaymentFragment newInstance(String param1, String param2) {
-        PaymentFragment fragment = new PaymentFragment();
+    public static AddAddressFragment newInstance(String param1, String param2) {
+        AddAddressFragment fragment = new AddAddressFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -67,17 +68,15 @@ public class PaymentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView =  inflater.inflate(R.layout.fragment_payment, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_add_address, container, false);
         ButterKnife.bind(this,rootView);
-        btnAddPayment.setOnClickListener(new View.OnClickListener() {
+        btnCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().popBackStack(getFragmentManager().getBackStackEntryAt(0).getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                getFragmentManager().beginTransaction().add(R.id.main_fragment_container, new PaymentFragment(), "payment_fragment").addToBackStack(null).commit();
             }
         });
         return rootView;
-
-
     }
 
 }

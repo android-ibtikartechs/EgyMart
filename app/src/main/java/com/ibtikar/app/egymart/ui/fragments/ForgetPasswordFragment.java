@@ -1,13 +1,18 @@
 package com.ibtikar.app.egymart.ui.fragments;
 
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.ibtikar.app.egymart.R;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +28,9 @@ public class ForgetPasswordFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    @BindView(R.id.btn_recover_password)
+    ImageView btnRecoverPassword;
 
 
     public ForgetPasswordFragment() {
@@ -60,7 +68,15 @@ public class ForgetPasswordFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_forget_password, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_forget_password, container, false);
+        ButterKnife.bind(this, rootView);
+        btnRecoverPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().popBackStack();
+            }
+        });
+        return rootView;
     }
 
 }

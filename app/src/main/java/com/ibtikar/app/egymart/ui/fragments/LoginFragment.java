@@ -6,8 +6,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.ibtikar.app.egymart.R;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +28,15 @@ public class LoginFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+
+    @BindView(R.id.btn_login)
+    ImageView btnLogin;
+
+    @BindView(R.id.new_account)
+    ImageView btnNewAccount;
+
+    @BindView(R.id.btn_forget_password)
+    ImageView btnForgetPassword;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -60,7 +73,31 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_login, container, false);
+        ButterKnife.bind(this, rootView);
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction().add(R.id.main_fragment_container, new CartFragment(), "cart_fragment").addToBackStack(null).commit();
+            }
+        });
+
+        btnNewAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction().add(R.id.main_fragment_container, new RegisterFragment(), "register_fragment").addToBackStack("").commit();
+            }
+        });
+
+        btnForgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction().add(R.id.main_fragment_container, new ForgetPasswordFragment(), "forget_password_fragment").addToBackStack("").commit();
+            }
+        });
+
+        return rootView;
     }
 
 }

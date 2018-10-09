@@ -183,12 +183,7 @@ public class OffersFragment extends BaseFragment implements AdapterOffers.custom
     }
 
     private void getMvpViewaddMoreToAdapter(final ArrayList<OfferModel> list) {
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
                     adapter.addAll(list);
-                }
-            });
     }
 
 

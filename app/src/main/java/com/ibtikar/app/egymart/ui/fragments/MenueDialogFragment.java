@@ -13,17 +13,85 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.ibtikar.app.egymart.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MenueDialogFragment extends DialogFragment {
+
+    @BindView(R.id.btn_close)
+    ImageView btnClose;
+
+    @BindView(R.id.btn_home)
+    ImageView btnHome;
+
+    @BindView(R.id.btn_login_reg)
+    ImageView btnLoginReg;
+
+    @BindView(R.id.btn_offers)
+    ImageView btnOffers;
+
+    @BindView(R.id.btnCategories)
+    ImageView btnCategories;
+
+    @BindView(R.id.btn_exit)
+    ImageView btnExit;
+
+    CustomButtonListener customListener;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_menu_dialog_fragment, container, false);
+        ButterKnife.bind(this, rootView);
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+
+
+
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customListener.onItemClickListner("home");
+            }
+        });
+
+        btnCategories.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customListener.onItemClickListner("categories");
+            }
+        });
+
+        btnExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customListener.onItemClickListner("exit");
+            }
+        });
+
+        btnLoginReg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customListener.onItemClickListner("loginRegister");
+            }
+        });
+
+        btnOffers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customListener.onItemClickListner("offers");
+            }
+        });
 
         return rootView;
     }
@@ -46,4 +114,12 @@ public class MenueDialogFragment extends DialogFragment {
         dialog.getWindow().setAttributes(params);
         return dialog;
     }
+
+    public interface CustomButtonListener {
+        public void onItemClickListner(String title);
+    }
+    public void setCustomButtonListner(CustomButtonListener listener) {
+        this.customListener = listener;
+    }
+
 }
