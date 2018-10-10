@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,13 +103,15 @@ public class CategoriesFragment extends BaseFragment implements CategoriesMvpVie
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
         arrayList = new ArrayList<>();
         ButterKnife.bind(this,view);
+        Log.d("", "onCreateView: ");
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Toast.makeText(getActivity(), String.valueOf(arrayList.size()), Toast.LENGTH_SHORT).show();
+        //presenter.loadCategories();
+        //Toast.makeText(getActivity(), String.valueOf(arrayList.size()), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -116,7 +119,7 @@ public class CategoriesFragment extends BaseFragment implements CategoriesMvpVie
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         catRecyclerView.setLayoutManager(staggeredGridLayoutManager);
         catRecyclerView.setHasFixedSize(true);
-
+        Log.d("", "onViewCreated: ");
         populatRecyclerView();
         presenter.loadCategories();
         super.onViewCreated(view, savedInstanceState);
@@ -131,7 +134,7 @@ public class CategoriesFragment extends BaseFragment implements CategoriesMvpVie
 
     @Override
     public void onItemNewsClickListner(String title, String id) {
-        getFragmentManager().beginTransaction().replace(R.id.main_fragment_container, new SubCategoriesFragment(), "").addToBackStack("").commit();
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.main_fragment_container, new SubCategoriesFragment(), "").addToBackStack(null).commit();
     }
 
     @Override

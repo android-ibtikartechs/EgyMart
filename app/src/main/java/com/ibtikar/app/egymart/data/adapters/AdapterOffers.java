@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.ibtikar.app.egymart.R;
 import com.ibtikar.app.egymart.data.models.OfferModel;
 import com.ibtikar.app.egymart.uiutilities.CustomRecyclerView;
@@ -139,7 +141,14 @@ public class AdapterOffers  extends CustomRecyclerView.Adapter<RecyclerView.View
         switch (getItemViewType(position)) {
             case ITEM:
                 final OfferViewHolder offerViewHolder = (OfferViewHolder) holder;
-                offerViewHolder.im.setImageBitmap(model.getImgUrl());
+                if (model.getImgUrl() == null || model.getImgUrl().isEmpty())
+                    offerViewHolder.im.setImageBitmap(model.getImg());
+                else
+                {
+                    Glide.with(context)
+                            .load(model.getImgUrl()).diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(offerViewHolder.im);
+                }
                 offerViewHolder.im.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

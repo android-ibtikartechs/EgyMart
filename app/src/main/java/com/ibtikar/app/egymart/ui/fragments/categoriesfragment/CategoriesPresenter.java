@@ -27,34 +27,6 @@ public class CategoriesPresenter <V extends CategoriesMvpView> extends BasePrese
         list.add(categoryModel);
         categoryModel = new CategoryModel("Food","2", BitmapFactory.decodeResource(((AppCompatActivity)getMvpView().passContext()).getResources(), R.drawable.foodd));
         list.add(categoryModel);
-        categoryModel = new CategoryModel("Souvenir","2", BitmapFactory.decodeResource(((AppCompatActivity)getMvpView().passContext()).getResources(), R.drawable.box));
-        list.add(categoryModel);
-        categoryModel = new CategoryModel("Food","2", BitmapFactory.decodeResource(((AppCompatActivity)getMvpView().passContext()).getResources(), R.drawable.foodd));
-        list.add(categoryModel);
-        categoryModel = new CategoryModel("Souvenir","2", BitmapFactory.decodeResource(((AppCompatActivity)getMvpView().passContext()).getResources(), R.drawable.box));
-        list.add(categoryModel);
-        categoryModel = new CategoryModel("Food","2", BitmapFactory.decodeResource(((AppCompatActivity)getMvpView().passContext()).getResources(), R.drawable.foodd));
-        list.add(categoryModel);
-        categoryModel = new CategoryModel("Souvenir","2", BitmapFactory.decodeResource(((AppCompatActivity)getMvpView().passContext()).getResources(), R.drawable.box));
-        list.add(categoryModel);
-        categoryModel = new CategoryModel("Food","2", BitmapFactory.decodeResource(((AppCompatActivity)getMvpView().passContext()).getResources(), R.drawable.foodd));
-        list.add(categoryModel);
-        categoryModel = new CategoryModel("Souvenir","2", BitmapFactory.decodeResource(((AppCompatActivity)getMvpView().passContext()).getResources(), R.drawable.box));
-        list.add(categoryModel);
-        categoryModel = new CategoryModel("Food","2", BitmapFactory.decodeResource(((AppCompatActivity)getMvpView().passContext()).getResources(), R.drawable.foodd));
-        list.add(categoryModel);
-        categoryModel = new CategoryModel("Souvenir","2", BitmapFactory.decodeResource(((AppCompatActivity)getMvpView().passContext()).getResources(), R.drawable.box));
-        list.add(categoryModel);
-        categoryModel = new CategoryModel("Food","2", BitmapFactory.decodeResource(((AppCompatActivity)getMvpView().passContext()).getResources(), R.drawable.foodd));
-        list.add(categoryModel);
-        categoryModel = new CategoryModel("Souvenir","2", BitmapFactory.decodeResource(((AppCompatActivity)getMvpView().passContext()).getResources(), R.drawable.box));
-        list.add(categoryModel);
-        categoryModel = new CategoryModel("Food","2", BitmapFactory.decodeResource(((AppCompatActivity)getMvpView().passContext()).getResources(), R.drawable.foodd));
-        list.add(categoryModel);
-        categoryModel = new CategoryModel("Souvenir","2", BitmapFactory.decodeResource(((AppCompatActivity)getMvpView().passContext()).getResources(), R.drawable.box));
-        list.add(categoryModel);
-        categoryModel = new CategoryModel("Food","2", BitmapFactory.decodeResource(((AppCompatActivity)getMvpView().passContext()).getResources(), R.drawable.foodd));
-        list.add(categoryModel);
         getMvpView().addMoreToAdapter(list);
     }
 }

@@ -15,6 +15,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.ibtikar.app.egymart.R;
 import com.ibtikar.app.egymart.data.models.CategoryModel;
 import com.ibtikar.app.egymart.uiutilities.CustomRecyclerView;
@@ -119,7 +121,16 @@ public class AdapterSubCategories extends CustomRecyclerView.Adapter<RecyclerVie
         switch (getItemViewType(position)) {
             case ITEM:
                 final SubCategoryViewHolder subCategoryViewHolder = (SubCategoryViewHolder) holder;
-                subCategoryViewHolder.img_desc.setImageBitmap(model.getIm());
+
+                if (model.getImgUrl()== null || model.getImgUrl().isEmpty())
+                    subCategoryViewHolder.img_desc.setImageBitmap(model.getIm());
+                else
+                {
+                    Glide.with(context)
+                            .load(model.getImgUrl()).diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(subCategoryViewHolder.img_desc);
+                }
+
                 subCategoryViewHolder.tv_title.setText(model.getTitle());
                 subCategoryViewHolder.lout_container.setOnClickListener(new View.OnClickListener() {
                     @Override

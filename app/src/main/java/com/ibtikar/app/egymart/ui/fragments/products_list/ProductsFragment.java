@@ -207,7 +207,7 @@ public class ProductsFragment extends BaseFragment implements ProductsMvpView, A
 
     @Override
     public void onItemClickListner(String id, String title) {
-        getFragmentManager().beginTransaction().replace(R.id.main_fragment_container, new ProductDetailsFragment(), "").addToBackStack("").commit();
+        getFragmentManager().beginTransaction().add(R.id.main_fragment_container, new ProductDetailsFragment(), "").addToBackStack("").commit();
     }
 
     @Override

@@ -262,7 +262,7 @@ public class SubCategoriesFragment extends BaseFragment implements SubCategories
 
     @Override
     public void onItemClickListner(String id, String title) {
-        getFragmentManager().beginTransaction().replace(R.id.main_fragment_container, new ProductsFragment(), "").addToBackStack("").commit();
+        getFragmentManager().beginTransaction().add(R.id.main_fragment_container, new ProductsFragment(), "").addToBackStack("").commit();
     }
 
     @Override
