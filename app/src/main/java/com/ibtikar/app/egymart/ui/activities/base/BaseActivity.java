@@ -1,6 +1,0 @@
-package com.ibtikar.app.egymart.ui.activities.base;
-
-import android.support.v7.app.AppCompatActivity;
-
-public class BaseActivity extends AppCompatActivity implements MvpView {
-}

@@ -47,7 +47,7 @@
 
     </RelativeLayout>
 
-    <com.ibtikar.app.egymart.uiutilities.CustomRecyclerView
+    <com.ibtikar.app.dutchmart.uiutilities.CustomRecyclerView
         android:id="@+id/sub_cat_home_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
