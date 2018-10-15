@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.ibtikar.app.dutchmart.R;
@@ -25,7 +26,7 @@ public class RegisterFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     @BindView(R.id.btn_register)
-    ImageView btnLogin;
+    Button btnLogin;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -66,7 +67,7 @@ public class RegisterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_register, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_register_sec, container, false);
         ButterKnife.bind(this, rootView);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

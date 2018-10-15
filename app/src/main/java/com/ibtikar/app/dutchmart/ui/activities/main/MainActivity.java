@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ibtikar.app.dutchmart.R;
+import com.ibtikar.app.dutchmart.ui.activities.base.BaseActivity;
 import com.ibtikar.app.dutchmart.ui.fragments.CartFragment;
 import com.ibtikar.app.dutchmart.ui.fragments.LoginFragment;
 import com.ibtikar.app.dutchmart.ui.fragments.categoriesfragment.CategoriesFragment;
@@ -25,7 +26,7 @@ import com.ibtikar.app.dutchmart.ui.fragments.subcategories.SubCategoriesFragmen
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements MenueDialogFragment.CustomButtonListener {
+public class MainActivity extends BaseActivity implements MenueDialogFragment.CustomButtonListener {
     @BindView(R.id.main_toolbar)
     Toolbar toolbar;
 

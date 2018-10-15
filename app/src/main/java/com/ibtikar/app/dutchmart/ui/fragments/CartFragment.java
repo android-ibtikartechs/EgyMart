@@ -2,14 +2,23 @@ package com.ibtikar.app.dutchmart.ui.fragments;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.ibtikar.app.dutchmart.R;
+import com.ibtikar.app.dutchmart.data.adapters.CartItemsAdapter;
+import com.ibtikar.app.dutchmart.data.models.CartItemModel;
 import com.ibtikar.app.dutchmart.ui.fragments.products_list.ProductsFragment;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,13 +28,13 @@ import butterknife.ButterKnife;
  * Use the {@link CartFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CartFragment extends Fragment {
+public class CartFragment extends Fragment implements CartItemsAdapter.CustomeListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    @BindView(R.id.btn_product)
+ /*   @BindView(R.id.btn_product)
     ImageView btnProd;
 
     @BindView(R.id.btn_product1)
@@ -35,7 +44,22 @@ public class CartFragment extends Fragment {
     ImageView btnProd2;
 
     @BindView(R.id.btnPlaceOrder)
-    ImageView btnPlaceOrder;
+    ImageView btnPlaceOrder; */
+
+    @BindView(R.id.lv_cart_list)
+    ListView lvCartList;
+
+    @BindView(R.id.btn_place_order)
+    RelativeLayout btnPlaceOrder;
+
+    @BindView(R.id.tv_total_price)
+    TextView tvTotalPrice;
+
+    String totalPrice;
+
+    ArrayList<CartItemModel> cartItemsArrayList;
+    CartItemsAdapter cartListAdapter;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -76,37 +100,64 @@ public class CartFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_cart, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_cart_sec, container, false);
         ButterKnife.bind(this, rootView);
-        btnProd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.main_fragment_container, new ProductDetailsFragment(), "").addToBackStack("").commit();
-            }
-        });
-
-        btnProd1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.main_fragment_container, new ProductDetailsFragment(), "").addToBackStack("").commit();
-            }
-        });
-
-        btnProd2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.main_fragment_container, new ProductDetailsFragment(), "").addToBackStack("").commit();
-            }
-        });
-
         btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.main_fragment_container, new AddAddressFragment(), "").addToBackStack("").commit();
+                getFragmentManager().beginTransaction().add(R.id.main_fragment_container, new AddAddressFragment(), "").addToBackStack("").commit();
             }
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        cartItemsArrayList = new ArrayList<>();
+        cartItemsArrayList.add(new CartItemModel("فستان", 1, 300,"https://petersgourmetmarket.com/wp-content/uploads/2015/07/DSC_2595.jpg","2"));
+        cartItemsArrayList.add(new CartItemModel("فستان", 1, 300,"https://petersgourmetmarket.com/wp-content/uploads/2015/07/DSC_2595.jpg","2"));
+        cartItemsArrayList.add(new CartItemModel("فستان", 1, 300,"https://petersgourmetmarket.com/wp-content/uploads/2015/07/DSC_2595.jpg","2"));
+        cartItemsArrayList.add(new CartItemModel("فستان", 1, 300,"https://petersgourmetmarket.com/wp-content/uploads/2015/07/DSC_2595.jpg","2"));
+        cartItemsArrayList.add(new CartItemModel("فستان", 1, 300,"https://petersgourmetmarket.com/wp-content/uploads/2015/07/DSC_2595.jpg","2"));
+        cartItemsArrayList.add(new CartItemModel("فستان", 1, 300,"https://petersgourmetmarket.com/wp-content/uploads/2015/07/DSC_2595.jpg","2"));
+        cartItemsArrayList.add(new CartItemModel("فستان", 1, 300,"https://petersgourmetmarket.com/wp-content/uploads/2015/07/DSC_2595.jpg","2"));
+        cartListAdapter = new CartItemsAdapter(getContext(),cartItemsArrayList);
+        cartListAdapter.setCustomButtonListner(this);
+        lvCartList.setAdapter(cartListAdapter);
+    }
+
+    @Override
+    public void onRemoveButtonClickListner(String productId, int position) {
+
+    }
+
+    @Override
+    public void onAmountEditListener(String currentQuantity, boolean isIncrease, int position) {
+        if (isIncrease)
+        ((TextView) getViewByPosition(position,lvCartList).findViewById(R.id.tv_quantity)).setText(String.valueOf(Integer.valueOf(currentQuantity) + 1));
+
+        else
+            if (Integer.valueOf(currentQuantity )!=0)
+            ((TextView) getViewByPosition(position,lvCartList).findViewById(R.id.tv_quantity)).setText(String.valueOf(Integer.valueOf(currentQuantity) - 1));
+    }
+
+    @Override
+    public void onItemClickListener(String productId) {
+        getFragmentManager().beginTransaction().add(R.id.main_fragment_container, new ProductDetailsFragment(), "").addToBackStack("").commit();
+    }
+
+    public View getViewByPosition(int pos, ListView listView) {
+        final int firstListItemPosition = listView.getFirstVisiblePosition();
+        final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
+
+        if (pos < firstListItemPosition || pos > lastListItemPosition) {
+            return listView.getAdapter().getView(pos, null, listView);
+        } else {
+            final int childIndex = pos - firstListItemPosition;
+            return listView.getChildAt(childIndex);
+        }
     }
 
 }
