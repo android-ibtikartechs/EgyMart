@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.ibtikar.app.dutchmart.R;
@@ -29,7 +30,7 @@ public class AddAddressFragment extends Fragment {
     private String mParam2;
 
     @BindView(R.id.btn_checkout)
-    ImageView btnCheckout;
+    Button btnCheckout;
 
 
 
@@ -68,7 +69,7 @@ public class AddAddressFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_add_address, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_add_address_sec, container, false);
         ButterKnife.bind(this,rootView);
         btnCheckout.setOnClickListener(new View.OnClickListener() {
             @Override

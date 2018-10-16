@@ -6,7 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.ibtikar.app.dutchmart.R;
 
@@ -30,13 +33,13 @@ public class LoginFragment extends Fragment {
 
 
     @BindView(R.id.btn_login)
-    ImageView btnLogin;
+    Button btnLogin;
 
     @BindView(R.id.new_account)
-    ImageView btnNewAccount;
+    TextView btnNewAccount;
 
     @BindView(R.id.btn_forget_password)
-    ImageView btnForgetPassword;
+    TextView btnForgetPassword;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -73,7 +76,7 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_login, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_login_sec, container, false);
         ButterKnife.bind(this, rootView);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {

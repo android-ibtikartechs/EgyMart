@@ -6,17 +6,16 @@
     android:background="#eeeeee"
     >
 
-            
             <ListView
                 android:id="@+id/lv_cart_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:nestedScrollingEnabled="false"
+                android:dividerHeight="0dp"
+                android:divider="@null"
                 android:paddingBottom="50dp"
                 />
             
-
-
 
     <include
         layout="@layout/view_place_order"

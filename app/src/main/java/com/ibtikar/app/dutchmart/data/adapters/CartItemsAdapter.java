@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 public class CartItemsAdapter extends ArrayAdapter<CartItemModel> {
     Context context;
     ViewHolder viewHolder;
+    ArrayList<CartItemModel> items;
 
     private CustomeListener customeListener;
 
@@ -31,6 +32,7 @@ public class CartItemsAdapter extends ArrayAdapter<CartItemModel> {
     {
         super(context,0,items);
         this.context = context;
+        this.items = items;
 
     }
 
@@ -52,16 +54,21 @@ public class CartItemsAdapter extends ArrayAdapter<CartItemModel> {
         viewHolder.btnDecreaseQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                customeListener.onAmountEditListener(viewHolder.tvQuntity.getText().toString(),false, position);
+                if (items.get(position).getQuantity()!=1) {
+                    items.get(position).setQuantity(items.get(position).getQuantity() - 1);
+                    customeListener.onAmountEditListener(items.get(position).getQuantity(), position);
+                }
             }
         });
 
         viewHolder.btnIncreaseAuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (items.get(position).getQuantity()!=10) {
+                    items.get(position).setQuantity(items.get(position).getQuantity() + 1);
+                    customeListener.onAmountEditListener(items.get(position).getQuantity(), position);
 
-                customeListener.onAmountEditListener(viewHolder.tvQuntity.getText().toString(),true, position);
+                }
             }
         });
 
@@ -125,7 +132,7 @@ public class CartItemsAdapter extends ArrayAdapter<CartItemModel> {
 
     public interface CustomeListener {
         public void onRemoveButtonClickListner(String productId, int position);
-        public void onAmountEditListener(String currentQuantity, boolean isIncrease, int position);
+        public void onAmountEditListener(Integer currentQuantity, int position);
         public void onItemClickListener(String productId);
     }
     public void setCustomButtonListner(CustomeListener listener) {

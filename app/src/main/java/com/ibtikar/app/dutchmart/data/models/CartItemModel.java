@@ -6,14 +6,21 @@ public class CartItemModel {
     private Integer priceForTotalQuantity;
     private String ImageUrl;
     private String id;
+    private Integer priceForUnit;
 
-    public CartItemModel(String productName, Integer quantity, Integer priceForTotalQuantity, String ImageUrl, String id) {
+    public CartItemModel(String productName, Integer priceForUnit, Integer quantity, String ImageUrl, String id) {
         this.productName = productName;
         this.quantity = quantity;
-        this.priceForTotalQuantity = priceForTotalQuantity;
         this.ImageUrl = ImageUrl;
         this.id = id;
+        this.priceForUnit = priceForUnit;
     }
+
+    public Integer getPriceForUnit() {
+        return priceForUnit;
+    }
+
+
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
@@ -32,7 +39,7 @@ public class CartItemModel {
     }
 
     public Integer getPriceForTotalQuantity() {
-        return priceForTotalQuantity;
+        return getQuantity() * getPriceForUnit();
     }
 
     public String getImageUrl() {

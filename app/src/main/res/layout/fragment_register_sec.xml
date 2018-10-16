@@ -21,14 +21,14 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="الاسم الثاني"
+            android:hint="Second Name"
             android:layout_marginTop="10dp"
             />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="البريد الالكتروني"
+            android:hint="Email"
             android:inputType="textEmailAddress"
             android:layout_marginTop="10dp"
             />
@@ -36,7 +36,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="كلمة المرور"
+            android:hint="Password"
             android:layout_marginTop="10dp"
             android:inputType="textPassword"
             android:gravity="end"

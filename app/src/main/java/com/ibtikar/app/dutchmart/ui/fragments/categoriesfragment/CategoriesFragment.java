@@ -25,6 +25,8 @@ import com.ibtikar.app.dutchmart.ui.activities.base.BaseFragment;
 import com.ibtikar.app.dutchmart.ui.fragments.ProductDetailsFragment;
 import com.ibtikar.app.dutchmart.ui.fragments.subcategories.SubCategoriesFragment;
 import com.ibtikar.app.dutchmart.uiutilities.CustomRecyclerView;
+import com.ibtikar.app.dutchmart.utils.PassedDataFromCategoriesToMenu;
+import com.ibtikar.app.dutchmart.utils.RxBus;
 
 import java.util.ArrayList;
 
@@ -139,6 +141,7 @@ public class CategoriesFragment extends BaseFragment implements CategoriesMvpVie
 
     @Override
     public void addMoreToAdapter(final ArrayList<CategoryModel> list) {
+        RxBus.publish(new PassedDataFromCategoriesToMenu(list));
         mHandler.post(new Runnable() {
             @Override
             public void run() {

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,16 +117,17 @@ public class CartFragment extends Fragment implements CartItemsAdapter.CustomeLi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         cartItemsArrayList = new ArrayList<>();
-        cartItemsArrayList.add(new CartItemModel("فستان", 1, 300,"https://petersgourmetmarket.com/wp-content/uploads/2015/07/DSC_2595.jpg","2"));
-        cartItemsArrayList.add(new CartItemModel("فستان", 1, 300,"https://petersgourmetmarket.com/wp-content/uploads/2015/07/DSC_2595.jpg","2"));
-        cartItemsArrayList.add(new CartItemModel("فستان", 1, 300,"https://petersgourmetmarket.com/wp-content/uploads/2015/07/DSC_2595.jpg","2"));
-        cartItemsArrayList.add(new CartItemModel("فستان", 1, 300,"https://petersgourmetmarket.com/wp-content/uploads/2015/07/DSC_2595.jpg","2"));
-        cartItemsArrayList.add(new CartItemModel("فستان", 1, 300,"https://petersgourmetmarket.com/wp-content/uploads/2015/07/DSC_2595.jpg","2"));
-        cartItemsArrayList.add(new CartItemModel("فستان", 1, 300,"https://petersgourmetmarket.com/wp-content/uploads/2015/07/DSC_2595.jpg","2"));
-        cartItemsArrayList.add(new CartItemModel("فستان", 1, 300,"https://petersgourmetmarket.com/wp-content/uploads/2015/07/DSC_2595.jpg","2"));
+        cartItemsArrayList.add(new CartItemModel("product", 300, 1,"https://petersgourmetmarket.com/wp-content/uploads/2015/07/DSC_2595.jpg","2"));
+        cartItemsArrayList.add(new CartItemModel("product", 20, 1,"https://static.shoplightspeed.com/shops/618750/files/008894922/image.jpg","2"));
+        cartItemsArrayList.add(new CartItemModel("product", 30, 1,"https://static.shoplightspeed.com/shops/618750/files/008898824/image.jpg","2"));
+        cartItemsArrayList.add(new CartItemModel("product", 5, 1,"https://static.shoplightspeed.com/shops/618750/files/008898632/image.jpg","2"));
+        cartItemsArrayList.add(new CartItemModel("product", 10, 1,"https://static.shoplightspeed.com/shops/618750/files/010297995/image.jpg","2"));
+        cartItemsArrayList.add(new CartItemModel("product", 20, 1,"https://petersgourmetmarket.com/wp-content/uploads/2015/07/DSC_2595.jpg","2"));
+        cartItemsArrayList.add(new CartItemModel("product", 8, 1,"https://petersgourmetmarket.com/wp-content/uploads/2015/07/DSC_2595.jpg","2"));
         cartListAdapter = new CartItemsAdapter(getContext(),cartItemsArrayList);
         cartListAdapter.setCustomButtonListner(this);
         lvCartList.setAdapter(cartListAdapter);
+        updateTotalPrice();
     }
 
     @Override
@@ -134,18 +136,27 @@ public class CartFragment extends Fragment implements CartItemsAdapter.CustomeLi
     }
 
     @Override
-    public void onAmountEditListener(String currentQuantity, boolean isIncrease, int position) {
-        if (isIncrease)
-        ((TextView) getViewByPosition(position,lvCartList).findViewById(R.id.tv_quantity)).setText(String.valueOf(Integer.valueOf(currentQuantity) + 1));
-
-        else
-            if (Integer.valueOf(currentQuantity )!=0)
-            ((TextView) getViewByPosition(position,lvCartList).findViewById(R.id.tv_quantity)).setText(String.valueOf(Integer.valueOf(currentQuantity) - 1));
+    public void onAmountEditListener(Integer currentQuantity,  int position) {
+        Log.d("", "onAmountEditListener: " + currentQuantity);
+        cartItemsArrayList.get(position).setQuantity(currentQuantity);
+        ((TextView) getViewByPosition(position,lvCartList).findViewById(R.id.tv_quantity)).setText(cartItemsArrayList.get(position).getQuantity().toString());
+        ((TextView) getViewByPosition(position, lvCartList).findViewById(R.id.tv_total_quantity_price)).setText(String.valueOf(cartItemsArrayList.get(position).getPriceForTotalQuantity()));
+        updateTotalPrice();
     }
 
     @Override
     public void onItemClickListener(String productId) {
         getFragmentManager().beginTransaction().add(R.id.main_fragment_container, new ProductDetailsFragment(), "").addToBackStack("").commit();
+    }
+
+    public void updateTotalPrice ()
+    {
+        Integer totalPrice = 0;
+        for (int i =0; i<cartItemsArrayList.size(); i++)
+        {
+            totalPrice += cartItemsArrayList.get(i).getPriceForTotalQuantity();
+        }
+        tvTotalPrice.setText(totalPrice.toString());
     }
 
     public View getViewByPosition(int pos, ListView listView) {

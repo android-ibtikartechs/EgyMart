@@ -22,9 +22,13 @@ import com.ibtikar.app.dutchmart.ui.fragments.categoriesfragment.CategoriesFragm
 import com.ibtikar.app.dutchmart.ui.fragments.MenueDialogFragment;
 import com.ibtikar.app.dutchmart.ui.fragments.offers.OffersFragment;
 import com.ibtikar.app.dutchmart.ui.fragments.subcategories.SubCategoriesFragment;
+import com.ibtikar.app.dutchmart.utils.PassedDataFromCategoriesToMenu;
+import com.ibtikar.app.dutchmart.utils.RxBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 public class MainActivity extends BaseActivity implements MenueDialogFragment.CustomButtonListener {
     @BindView(R.id.main_toolbar)
@@ -34,7 +38,8 @@ public class MainActivity extends BaseActivity implements MenueDialogFragment.Cu
 
     MenueDialogFragment menueDialogFragment;
 
-
+    Disposable disposable;
+    PassedDataFromCategoriesToMenu data;
     private Handler mHandler;
 
     @Override
@@ -44,6 +49,23 @@ public class MainActivity extends BaseActivity implements MenueDialogFragment.Cu
 
         mHandler = new Handler(Looper.getMainLooper());
         ButterKnife.bind(this);
+
+
+       /* disposable = RxBus.subscribe(new Consumer<Object>() {
+            @Override
+            public void accept(Object o) throws Exception {
+                if (o instanceof PassedDataFromCategoriesToMenu) {
+                    data= (PassedDataFromCategoriesToMenu) o;
+                    //do sth with the data .. you can populate a RecycleView for example
+                }
+            }
+        });
+
+        RxBus.publish(data);
+
+        disposable.dispose();
+*/
+
         setupActionBar();
         getSupportFragmentManager().beginTransaction().add(R.id.main_fragment_container, new CategoriesFragment(), "men").commit();
     }
@@ -109,38 +131,31 @@ public class MainActivity extends BaseActivity implements MenueDialogFragment.Cu
 
 
     @Override
-    public void onItemClickListner(String title) {
+    public void onItemClickListner(String title, String itemId) {
         menueDialogFragment.dismiss();
-        switch (title)
+        if (itemId.equals("-1"))
         {
-            case "home" :
-                if (getSupportFragmentManager().getBackStackEntryCount()>=1)
-                {
-                    //getSupportFragmentManager().beginTransaction().add(R.id.main_fragment_container, new CategoriesFragment(), "men").commit();
-                    getSupportFragmentManager().popBackStack(getSupportFragmentManager().getBackStackEntryAt(0).getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                }
-                break;
+            switch (title) {
+                case "Home":
+                    if (getSupportFragmentManager().getBackStackEntryCount() >= 1) {
+                        //getSupportFragmentManager().beginTransaction().add(R.id.main_fragment_container, new CategoriesFragment(), "men").commit();
+                        getSupportFragmentManager().popBackStack(getSupportFragmentManager().getBackStackEntryAt(0).getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    }
+                    break;
 
-            case "categories" :
-                getSupportFragmentManager().beginTransaction().add(R.id.main_fragment_container, new SubCategoriesFragment(), "subcategories_fragment").addToBackStack(null).commit();
-                break;
+                case "Exit":
+                    Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+                    homeIntent.addCategory(Intent.CATEGORY_HOME);
+                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(homeIntent);
+                    break;
 
-            case "exit":
-                Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-                homeIntent.addCategory( Intent.CATEGORY_HOME );
-                homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(homeIntent);
-                break;
-
-            case "loginRegister":
-                getSupportFragmentManager().beginTransaction().add(R.id.main_fragment_container, new LoginFragment(), "login_fragment").addToBackStack(null).commit();
-                break;
-
-            case "offers":
-                getSupportFragmentManager().beginTransaction().add(R.id.main_fragment_container, new OffersFragment(), "offers_fragment").addToBackStack(null).commit();
-                break;
-
-
+                case "Offers":
+                    getSupportFragmentManager().beginTransaction().add(R.id.main_fragment_container, new OffersFragment(), "offers_fragment").addToBackStack(null).commit();
+                    break;
+            }
         }
+        else
+            getSupportFragmentManager().beginTransaction().add(R.id.main_fragment_container, new SubCategoriesFragment(), "subcategories_fragment").addToBackStack(null).commit();
     }
 }
