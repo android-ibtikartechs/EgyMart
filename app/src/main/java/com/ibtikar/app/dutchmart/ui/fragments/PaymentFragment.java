@@ -2,14 +2,22 @@ package com.ibtikar.app.dutchmart.ui.fragments;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 
 import com.ibtikar.app.dutchmart.R;
+import com.ibtikar.app.dutchmart.data.adapters.PaymentMethodsListAdapter;
+import com.ibtikar.app.dutchmart.data.models.CreditsItemModel;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,7 +27,7 @@ import butterknife.ButterKnife;
  * Use the {@link PaymentFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PaymentFragment extends Fragment {
+public class PaymentFragment extends Fragment implements PaymentMethodsListAdapter.CustomeListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,7 +38,13 @@ public class PaymentFragment extends Fragment {
     private String mParam2;
 
     @BindView(R.id.btn_add_payment)
-    ImageView btnAddPayment;
+    Button btnAddPayment;
+
+    @BindView(R.id.lv_payment_methods)
+    ListView lvMenu;
+
+    ArrayList<CreditsItemModel> menuItemsArrayList;
+    PaymentMethodsListAdapter cartListAdapter;
 
     public PaymentFragment() {
         // Required empty public constructor
@@ -67,7 +81,7 @@ public class PaymentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView =  inflater.inflate(R.layout.fragment_payment, container, false);
+        View rootView =  inflater.inflate(R.layout.fragment_payment_sec, container, false);
         ButterKnife.bind(this,rootView);
         btnAddPayment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,4 +94,24 @@ public class PaymentFragment extends Fragment {
 
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        menuItemsArrayList = new ArrayList<>();
+        menuItemsArrayList.add(new CreditsItemModel("1","visa***9011"));
+        menuItemsArrayList.add(new CreditsItemModel("2","visa***9077"));
+        menuItemsArrayList.add(new CreditsItemModel("3","visa***9123"));
+        menuItemsArrayList.add(new CreditsItemModel("-1","Paypal"));
+        menuItemsArrayList.add(new CreditsItemModel("-2","Cash on delivery"));
+
+
+        cartListAdapter = new PaymentMethodsListAdapter(getContext(),menuItemsArrayList);
+        cartListAdapter.setCustomButtonListner(this);
+        lvMenu.setAdapter(cartListAdapter);
+    }
+
+    @Override
+    public void onItemClickListener(String title, String itemId, int position) {
+
+    }
 }

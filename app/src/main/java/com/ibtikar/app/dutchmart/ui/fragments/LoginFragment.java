@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ibtikar.app.dutchmart.R;
@@ -40,6 +41,9 @@ public class LoginFragment extends Fragment {
 
     @BindView(R.id.btn_forget_password)
     TextView btnForgetPassword;
+
+    @BindView(R.id.dummy_click)
+    RelativeLayout dummiesClick;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -97,6 +101,15 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getFragmentManager().beginTransaction().add(R.id.main_fragment_container, new ForgetPasswordFragment(), "forget_password_fragment").addToBackStack("").commit();
+            }
+        });
+
+        dummiesClick.setSoundEffectsEnabled(false);
+
+        dummiesClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
