@@ -28,8 +28,6 @@ public class ProductsPresenter <V extends ProductsMvpView> extends BasePresenter
         list.add(categoryModel);
         categoryModel = new CategoryModel("Food","2", "https://static.shoplightspeed.com/shops/618750/files/010297995/image.jpg");
         list.add(categoryModel);
-        categoryModel = new CategoryModel("Souvenir","2", "https://petersgourmetmarket.com/wp-content/uploads/2015/07/DSC_2595.jpg");
-        list.add(categoryModel);
         categoryModel = new CategoryModel("Food","2", "https://petersgourmetmarket.com/wp-content/uploads/2015/06/DSC_2509.jpg");
         list.add(categoryModel);
         categoryModel = new CategoryModel("Souvenir","2", "https://petersgourmetmarket.com/wp-content/uploads/2015/06/DSC_2541.jpg");

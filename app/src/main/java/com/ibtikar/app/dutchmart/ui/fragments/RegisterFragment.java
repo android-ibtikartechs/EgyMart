@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.ibtikar.app.dutchmart.R;
 
@@ -27,6 +28,8 @@ public class RegisterFragment extends Fragment {
 
     @BindView(R.id.btn_register)
     Button btnLogin;
+    @BindView(R.id.dummy_click)
+    RelativeLayout dummiesClick;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -73,6 +76,15 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getFragmentManager().beginTransaction().add(R.id.main_fragment_container, new CartFragment(), "cart_fragment").addToBackStack(null).commit();
+            }
+        });
+
+        dummiesClick.setSoundEffectsEnabled(false);
+
+        dummiesClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
         return rootView;
